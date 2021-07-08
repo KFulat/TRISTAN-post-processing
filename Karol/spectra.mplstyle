@@ -1,0 +1,16 @@
+#https://matplotlib.org/tutorials/introductory/customizing.html
+#font.family : serif
+#font.serif : Computer Modern Roman
+#font.weight : 900
+legend.fancybox :False
+legend.frameon : False
+legend.loc : best
+legend.borderpad : 1
+#text.usetex : True
+xtick.direction : in
+xtick.top : True
+xtick.bottom : True
+ytick.direction : in
+ytick.left : True  
+ytick.right : True
+
