@@ -17,13 +17,13 @@ import scipy as scp
 import h5py
 from scipy import ndimage
 from scipy.interpolate import splev, splprep
-#import matplotlib.animation as animation
+# import matplotlib.animation as animation
 import time
-#from numba import jit
+# from numba import jit
 import matplotlib as mpl
 mpl.use('Agg')
-#import matplotlib.gridspec as gridspec
-#from mpl_toolkits.axes_grid1 import make_axes_locatable
+# import matplotlib.gridspec as gridspec
+# from mpl_toolkits.axes_grid1 import make_axes_locatable
 plt.style.use('./spectra.mplstyle')
 
 # ------------------------------------
@@ -832,7 +832,7 @@ def plot_dens(dense, densi, xp, yp, x_shock_linear, x_shock, step):
     step_str = "{:06d}".format(step)
     floor_str = "{:02.1f}".format(AFLOORD)
 
-    fig = plt.figure(figsize=(12.31*0.6, 9.2), dpi=300)
+    fig = plt.figure(figsize=(22.3, 9.68), dpi=100)
 
     # Axes limits
     if step > STEP_LIMIT:
@@ -844,9 +844,23 @@ def plot_dens(dense, densi, xp, yp, x_shock_linear, x_shock, step):
     ylim = (0, MY/LSI)
 
     # Adding axes
-    ax2 = fig.add_axes([0.05, 0.05, 0.88, 0.45], xlim=xlim, ylim=ylim)
-    ax1 = fig.add_axes([0.05, 0.46, 0.88, 0.45], sharex=ax2, ylim=ylim)
-    cbaxes = fig.add_axes([0.95, 0.497, 0.015, 0.376])
+    # ax2 = fig.add_axes([0.05, 0.05, 0.88, 0.45], xlim=xlim, ylim=ylim)
+    # ax1 = fig.add_axes([0.05, 0.46, 0.88, 0.45], sharex=ax2, ylim=ylim)
+    # cbaxes = fig.add_axes([0.95, 0.497, 0.015, 0.376])
+    ax2 = fig.add_subplot(212, xlim=xlim, ylim=ylim)
+    ax1 = fig.add_subplot(211, sharex=ax2, ylim=ylim)
+    from mpl_toolkits.axes_grid1 import make_axes_locatable
+    # cbaxes = fig.add_axes([0.95, 0.497, 0.015, 0.376])
+    # cbaxes = inset_axes(ax1,
+    #                     width="5%",  # width = 50% of parent_bbox width
+    #                     height="50%",  # height : 5%
+    #                     loc='upper right')
+    divider = make_axes_locatable(ax1)
+    cbaxes = divider.append_axes('right', size='1.5%', pad=0.1)
+    divider = make_axes_locatable(ax2)
+    cax = divider.append_axes('right', size='1.5%', pad=0.1)
+    # cax.set_frame_on(False)
+    cax.set_axis_off()
 
     # Contour plots
     levels = 21
@@ -860,8 +874,8 @@ def plot_dens(dense, densi, xp, yp, x_shock_linear, x_shock, step):
 
     # Fontsize
     fs_ticks = 18
-    fs_labels = 18
-    fs_clabel = 14
+    # fs_labels = 18
+    fs_clabel = 16
     fs_text = 22
 
     # Axes tick params
@@ -869,21 +883,17 @@ def plot_dens(dense, densi, xp, yp, x_shock_linear, x_shock, step):
     plt.setp(ax1.get_xticklabels(), visible=False)
     ax1.yaxis.set_major_locator(MultipleLocator(4))
     ax1.yaxis.set_minor_locator(MultipleLocator(1))
-    ax1.tick_params(axis='both', pad=8, labelsize=fs_ticks, length=10)
-    ax1.tick_params(axis='both', which='minor', length=5)
 
     ax2.set_aspect('equal')
     ax2.xaxis.set_major_locator(MultipleLocator(10))
     ax2.xaxis.set_minor_locator(MultipleLocator(1))
     ax2.yaxis.set_major_locator(MultipleLocator(4))
     ax2.yaxis.set_minor_locator(MultipleLocator(1))
-    ax2.tick_params(axis='both', pad=8, labelsize=fs_ticks, length=10)
-    ax2.tick_params(axis='both', which='minor', length=5)
 
     # Axes labels
-    ax1.set_ylabel(r'$y/\lambda_{si}$', fontsize=fs_labels)
-    ax2.set_xlabel(r'$x/\lambda_{si}$', fontsize=fs_labels)
-    ax2.set_ylabel(r'$y/\lambda_{si}$', fontsize=fs_labels)
+    ax1.set_ylabel(r'$y/\lambda_{si}$')
+    ax2.set_xlabel(r'$x/\lambda_{si}$')
+    ax2.set_ylabel(r'$y/\lambda_{si}$')
 
     # Text
     ax1.text(xlim[1]-12, ylim[1]-4.8, r'$a) N_e/N_0$', fontsize=fs_text)
@@ -898,7 +908,7 @@ def plot_dens(dense, densi, xp, yp, x_shock_linear, x_shock, step):
 
     # Colorbar
     cticks = np.linspace(-0.3, 0.7, 11)
-    cbar = fig.colorbar(cset1, cax=cbaxes, ax=[ax1, ax2], ticks=cticks)
+    cbar = fig.colorbar(cset1, cax=cbaxes, ax=ax1, ticks=cticks)
     cbar.ax.tick_params(labelsize=fs_clabel, length=5)
     cbar.ax.set_yticklabels(["{:3.1f}".format(i) for i in cticks])
     # cbar.set_label(r'$N/N_0$', fontsize=fs[1])

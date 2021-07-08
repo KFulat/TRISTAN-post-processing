@@ -11,6 +11,16 @@ xtick.direction : in
 xtick.top : True
 xtick.bottom : True
 ytick.direction : in
-ytick.left : True  
+ytick.left : True
 ytick.right : True
-
+axes.labelsize : 32
+axes.labelpad : 8
+axes.linewidth : 1.2
+xtick.major.size: 12
+xtick.minor.size: 7
+xtick.major.pad: 10
+xtick.labelsize: 24
+ytick.major.size: 12
+ytick.minor.size: 7
+ytick.major.pad: 10
+ytick.labelsize: 24
